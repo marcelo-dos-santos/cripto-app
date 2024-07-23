@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { CoinProps } from "../Home";
 import styles from "./detail.module.css";
@@ -19,6 +19,11 @@ export function Detail() {
 
   const [coin, setCoin] = useState<CoinProps>();
   const [loading, setLoading] = useState(true);
+
+  function handleGetBack(e: FormEvent) {
+    e.preventDefault();
+    navigate("/");
+  }
 
   useEffect(() => {
     async function getCoin() {
@@ -111,6 +116,11 @@ export function Detail() {
           </span>
         </a>
       </section>
+      <div className={styles.buttonContainer}>
+        <button className={styles.buttonMore} onClick={handleGetBack}>
+          Voltar para a página principal
+        </button>
+      </div>
     </div>
   );
 }

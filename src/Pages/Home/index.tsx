@@ -29,6 +29,7 @@ export function Home() {
   const [input, setInput] = useState("");
   const [coins, setCoins] = useState<CoinProps[]>([]);
   const [offset, setOffset] = useState(0);
+  const [filteredCoins, setFilteredCoins] = useState<CoinProps[]>([]);
 
   const navigate = useNavigate();
 
@@ -83,6 +84,13 @@ export function Home() {
       });
   }
 
+  useEffect(() => {
+    const result = coins.filter((coin) =>
+      coin.name.toLowerCase().includes(input.toLowerCase())
+    );
+    setFilteredCoins(result);
+  }, [input, coins]);
+
   return (
     <main className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -109,8 +117,8 @@ export function Home() {
         </thead>
 
         <tbody id="tbody">
-          {coins.length > 0 &&
-            coins.map((item) => (
+          {filteredCoins.length > 0 &&
+            filteredCoins.map((item) => (
               <tr className={styles.tr} key={item.id}>
                 <td className={styles.tdLabel} data-label="Moeda">
                   <div className={styles.name}>
